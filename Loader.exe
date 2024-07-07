@@ -1,0 +1,233 @@
+local GlitchedScreen = Instance.new("ScreenGui")
+local ScreenImage = Instance.new("ImageLabel")
+
+--Properties:
+
+GlitchedScreen.Name = "GlitchedScreen"
+GlitchedScreen.Parent = game.CoreGui
+GlitchedScreen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+ScreenImage.Name = "ScreenImage"
+ScreenImage.Parent = GlitchedScreen
+ScreenImage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ScreenImage.BackgroundTransparency = 1.000
+ScreenImage.BorderColor3 = Color3.fromRGB(27, 42, 53)
+ScreenImage.BorderSizePixel = 0
+ScreenImage.Position = UDim2.new(0, 0, -0.150000006, 0)
+ScreenImage.Size = UDim2.new(1, 0, 1.20000005, 0)
+ScreenImage.Image = "rbxassetid://7633244966"
+ScreenImage.ImageTransparency = 0.950
+
+-- Scripts:
+
+local function GDPJUNY_fake_script() -- ScreenImage.Glitch 
+	local script = Instance.new('LocalScript', ScreenImage)
+
+	while true do wait(math.random(0.2,0.15)) --Random Wait
+		
+		local ScreenImage= script.Parent --Screen
+		
+		local RandomScreen= math.random(1,10) --Makes a random value
+		
+		if RandomScreen== 1 then --if the random value is 1
+			ScreenImage.Size= UDim2.new(1.1, 0,1.2, 0)
+		end
+		
+		if RandomScreen== 2 then --if the random value is 2
+			ScreenImage.Size= UDim2.new(1.2, 0,1.2, 0)
+		end
+		
+		if RandomScreen== 3 then --if the random value is 3
+			ScreenImage.Size= UDim2.new(1.3, 0,1.2, 0)
+		end
+		
+		if RandomScreen== 4 then --if the random value is 4
+			ScreenImage.Size= UDim2.new(1.4, 0,1.2, 0)
+		end
+		
+		if RandomScreen== 5 then --if the random value is 5
+			ScreenImage.Size= UDim2.new(1.5, 0,1.2, 0)
+		end
+		
+		if RandomScreen== 6 then --if the random value is 6
+			ScreenImage.Size= UDim2.new(1.6, 0,1.2, 0)
+		end
+		
+		if RandomScreen== 7 then --if the random value is 7
+			ScreenImage.Size= UDim2.new(1.7, 0,1.2, 0)
+		end
+		
+		if RandomScreen== 8 then --if the random value is 8
+			ScreenImage.Size= UDim2.new(1.8, 0,1.2, 0)
+		end
+		
+		if RandomScreen== 9 then --if the random value is 9
+			ScreenImage.Size= UDim2.new(1.9, 0,1.2, 0)
+		end
+		
+		if RandomScreen== 10 then --if the random value is 10
+			ScreenImage.Size= UDim2.new(2, 0,1.2, 0)
+		end
+	end
+	
+end
+coroutine.wrap(GDPJUNY_fake_script)()
+local function REAJRIG_fake_script() -- ScreenImage.Slenderman 
+	local script = Instance.new('LocalScript', ScreenImage)
+
+	local Players = game:GetService("Players")
+	local RunService = game:GetService("RunService")
+	local Workspace = game:GetService("Workspace")
+	local Lighting = game:GetService("Lighting")
+	
+	local minDistance = 55
+	local maxDistance = 150
+	local disappearTime = 0.1
+	local lookTimeToDisappear = 0.3 -- Увеличил время, чтобы игрок должен был смотреть на SlenderMan дольше
+	
+	local HorrorMusic = Instance.new("Sound", game.SoundService)
+	HorrorMusic.SoundId = "rbxassetid://9039981149"
+	HorrorMusic.Volume = 1
+	HorrorMusic.Looped = true
+	HorrorMusic:Play()
+	
+	local HideSound = Instance.new("Sound", game.SoundService)
+	HideSound.SoundId = "rbxassetid://5351101493"
+	HideSound.Volume = 1
+	
+	local SlenderMan = Instance.new("Part")
+	SlenderMan.Size = Vector3.new(2, 6, 1)
+	SlenderMan.Anchored = true
+	SlenderMan.CanCollide = false
+	SlenderMan.BrickColor = BrickColor.new("Really black")
+	
+	local mesh = Instance.new("SpecialMesh", SlenderMan)
+	mesh.MeshId = "rbxassetid://15161037892"
+	mesh.TextureId = "rbxassetid://15161041382"
+	mesh.Scale = Vector3.new(1, 1, 1) -- Измените масштаб по необходимости
+	
+	local function getRandomPositionNearPlayer(player)
+		local character = player.Character
+		if not character then return nil end
+		local rootPart = character:FindFirstChild("HumanoidRootPart")
+		if not rootPart then return nil end
+		
+		local randomDirection = Vector3.new(
+			math.random(-100, 100) / 100,
+			0,
+			math.random(-100, 100) / 100
+		).unit
+		local distance = math.random(minDistance, maxDistance)
+		local position = rootPart.Position + randomDirection * distance
+		
+		-- Проверка на препятствия и корректировка позиции
+		local rayOrigin = position + Vector3.new(0, 50, 0)
+		local rayDirection = Vector3.new(0, -100, 0)
+		local raycastParams = RaycastParams.new()
+		raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+		raycastParams.FilterDescendantsInstances = {character, Workspace:FindFirstChild("SlenderMan")}
+		
+		local raycastResult = Workspace:Raycast(rayOrigin, rayDirection, raycastParams)
+		if raycastResult then
+			position = raycastResult.Position + Vector3.new(0, SlenderMan.Size.Y / 2, 0)
+		else
+			return nil -- Если нет поверхности, возвращаем nil
+		end
+		
+		return position
+	end
+	
+	local function lookAtPlayer(slenderMan, player)
+		local character = player.Character
+		if not character then return end
+		local rootPart = character:FindFirstChild("HumanoidRootPart")
+		if not rootPart then return end
+		
+		local lookAt = (rootPart.Position - slenderMan.Position).unit
+		local newCFrame = CFrame.new(slenderMan.Position, slenderMan.Position + lookAt)
+		slenderMan.CFrame = newCFrame
+	end
+	
+	local function spawnSlenderMan(SlenderMan)
+		while true do
+			for _, player in ipairs(Players:GetPlayers()) do
+				local position = getRandomPositionNearPlayer(player)
+				if position then
+					SlenderMan.CFrame = CFrame.new(position)
+					SlenderMan.Transparency = 0
+					lookAtPlayer(SlenderMan, player)
+					
+					local lookStartTime = tick()
+					while true do
+						lookAtPlayer(SlenderMan, player)
+						if SlenderMan.Transparency == 1 then
+							HideSound:Play() -- Проигрываем звук исчезновения
+							break
+						end
+						
+						local character = player.Character
+						if not character then break end
+						local rootPart = character:FindFirstChild("HumanoidRootPart")
+						if not rootPart then break end
+						
+						local playerToSlender = (SlenderMan.Position - rootPart.Position).unit
+						local forward = rootPart.CFrame.LookVector.unit
+						
+						local dotProduct = playerToSlender:Dot(forward)
+						if dotProduct > 0.95 then
+							if tick() - lookStartTime >= lookTimeToDisappear then
+								SlenderMan.Transparency = 1
+								HideSound:Play() -- Проигрываем звук исчезновения
+								break
+							end
+						else
+							lookStartTime = tick()
+						end
+						wait()
+					end
+					wait(math.random(5, 10))
+				end
+			end
+			wait(1)
+		end
+	end
+	
+	local function onCharacterAdded(character)
+		local humanoid = character:WaitForChild("Humanoid")
+		humanoid.Died:Connect(function()
+			SlenderMan.Transparency = 1
+		end)
+	end
+	
+	local function onPlayerAdded(player)
+		player.CharacterAdded:Connect(onCharacterAdded)
+	end
+	
+	Players.PlayerAdded:Connect(onPlayerAdded)
+	
+	SlenderMan.Parent = workspace
+	SlenderMan.Name = "SlenderMan"
+	
+	-- Функция для смены времени на ночь
+	local function setNightTime()
+		Lighting.ClockTime = 0 -- Устанавливаем время на 0, что соответствует полной ночи
+		Lighting.Brightness = 0.1 -- Уменьшаем яркость освещения для создания атмосферы
+	end
+	
+	-- Запускаем функцию смены времени на ночь при старте скрипта
+	setNightTime()
+	
+	spawn(function()
+		spawnSlenderMan(SlenderMan)
+	end)
+	
+	SlenderMan.Touched:Connect(function(hit)
+		if hit and hit.Parent and Players:GetPlayerFromCharacter(hit.Parent) then
+			wait(disappearTime)
+			SlenderMan.Transparency = 1
+			HideSound:Play() -- Проигрываем звук исчезновения
+		end
+	end)
+	
+end
+coroutine.wrap(REAJRIG_fake_script)()
